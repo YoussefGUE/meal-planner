@@ -14,6 +14,8 @@ app.use(express.json());
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
+const recipeRoutes = require('./routes/recipeRoutes');
+app.use('/api/recipes', recipeRoutes);
 app.get('/', (req, res) => { res.json({message: 'Bienvenue sur l\'API MealPlanner'});
 });
 
