@@ -16,6 +16,12 @@ app.use('/api/auth', authRoutes);
 
 const recipeRoutes = require('./routes/recipeRoutes');
 app.use('/api/recipes', recipeRoutes);
+
+const mealPlanRoutes = require('./routes/mealPlanRoutes');
+app.use('/api/mealplans', mealPlanRoutes);
+
+const shoppingRoutes = require('./routes/shoppingRoutes');
+app.use('/api/shopping', shoppingRoutes);
 app.get('/', (req, res) => { res.json({message: 'Bienvenue sur l\'API MealPlanner'});
 });
 
