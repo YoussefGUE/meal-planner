@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+:root {
+  --red: #8B2332;
+  --red-light: #C41E3A;
+  --black: #1A1A1A;
+  --beige: #F5F0E8;
+  --beige-dark: #E8DFD0;
+  --white: #FFFEF9;
+  --gold: #C4A35A;
+  --gray: #6B6B6B;
+  --green: #2D5A27;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: var(--beige);
+  color: var(--black);
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-family: 'Noto Serif JP', serif;
+}
+
+.btn-primary {
+  background-color: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: var(--red-light);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--red);
+  border: 2px solid var(--red);
+  padding: 10px 22px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.card {
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--beige-dark);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--beige-dark);
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: var(--white);
+  color: var(--black);
+  transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.divider {
+  width: 60px;
+  height: 3px;
+  background-color: var(--red);
+  margin: 8px auto 24px;
+}
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--beige) 0%, var(--beige-dark) 100%);
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-header h1 {
+  font-size: 36px;
+  color: var(--red);
+  margin-bottom: 4px;
+}
+
+.auth-header p {
+  color: var(--gray);
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--black);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray);
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.auth-link {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--gray);
+}
+
+.auth-link a {
+  color: var(--red);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+
+.error-msg {
+  background-color: #fde8e8;
+  color: var(--red);
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
