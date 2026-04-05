@@ -106,6 +106,9 @@ function Recipes() {
           )}
           {recipes.map(recipe => (
             <div key={recipe.id} className="recipe-card">
+              {recipe.imageUrl && (
+                <img src={recipe.imageUrl} alt={recipe.name} className="recipe-img" />
+              )}
               <h3>{recipe.name}</h3>
               <p>{recipe.instructions?.substring(0, 100)}...</p>
               <div className="meta">

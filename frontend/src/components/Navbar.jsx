@@ -18,7 +18,10 @@ function Navbar() {
       <ul className="navbar-links">
         <li><Link to="/" className={location.pathname === '/' ? 'active' : ''}>Accueil</Link></li>
         {token && (
-          <li><Link to="/recipes" className={location.pathname === '/recipes' ? 'active' : ''}>Recettes</Link></li>
+          <>
+            <li><Link to="/recipes" className={location.pathname === '/recipes' ? 'active' : ''}>Recettes</Link></li>
+            <li><Link to="/explore" className={location.pathname === '/explore' ? 'active' : ''}>Explorer</Link></li>
+          </>
         )}
       </ul>
       {token ? (
