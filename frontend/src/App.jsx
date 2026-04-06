@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Recipes from './pages/Recipes';
 import Explore from './pages/Explore';
+import Planner from './pages/Planner';
 import Navbar from './components/Navbar';
 import './App.css';
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/recipes" element={token ? <Recipes /> : <Navigate to="/login" />} />
           <Route path="/explore" element={token ? <Explore /> : <Navigate to="/login" />} />
+          <Route path="/planner" element={token ? <Planner /> : <Navigate to="/login" />} />
         </Routes>
       </div>
     </BrowserRouter>
