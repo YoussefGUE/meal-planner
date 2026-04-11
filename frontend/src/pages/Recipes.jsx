@@ -9,6 +9,7 @@ function Recipes() {
   const [form, setForm] = useState({
     name: '', instructions: '', prepTime: '', calories: '', proteins: '', carbs: '', fats: '', tags: '', imageUrl: ''
   });
+  const [ingredients, setIngredients] = useState([{ name: '', quantity: '', unit: '' }]);
 
   useEffect(() => {
     loadRecipes();
@@ -29,6 +30,20 @@ function Recipes() {
     }
   };
 
+  const addIngredient = () => {
+    setIngredients([...ingredients, { name: '', quantity: '', unit: '' }]);
+  };
+
+  const removeIngredient = (index) => {
+    setIngredients(ingredients.filter((_, i) => i !== index));
+  };
+
+  const updateIngredient = (index, field, value) => {
+    const updated = [...ingredients];
+    updated[index][field] = value;
+    setIngredients(updated);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const recipeData = {
@@ -38,7 +53,12 @@ function Recipes() {
       proteins: parseFloat(form.proteins) || null,
       carbs: parseFloat(form.carbs) || null,
       fats: parseFloat(form.fats) || null,
-      tags: form.tags ? form.tags.split(',').map(t => t.trim()) : []
+      tags: form.tags ? form.tags.split(',').map(t => t.trim()) : [],
+      ingredients: ingredients.filter(i => i.name.trim() !== '').map(i => ({
+        name: i.name,
+        quantity: parseFloat(i.quantity) || 1,
+        unit: i.unit
+      }))
     };
 
     if (editingRecipe) {
@@ -50,6 +70,7 @@ function Recipes() {
     setShowModal(false);
     setEditingRecipe(null);
     setForm({ name: '', instructions: '', prepTime: '', calories: '', proteins: '', carbs: '', fats: '', tags: '', imageUrl: '' });
+    setIngredients([{ name: '', quantity: '', unit: '' }]);
     loadRecipes();
   };
 
@@ -66,6 +87,15 @@ function Recipes() {
       tags: JSON.parse(recipe.tags || '[]').join(', '),
       imageUrl: recipe.imageUrl || ''
     });
+    if (recipe.RecipeIngredients && recipe.RecipeIngredients.length > 0) {
+      setIngredients(recipe.RecipeIngredients.map(ri => ({
+        name: ri.Ingredient?.name || '',
+        quantity: ri.quantity || '',
+        unit: ri.unit || ''
+      })));
+    } else {
+      setIngredients([{ name: '', quantity: '', unit: '' }]);
+    }
     setShowModal(true);
   };
 
@@ -79,6 +109,7 @@ function Recipes() {
   const openNewRecipe = () => {
     setEditingRecipe(null);
     setForm({ name: '', instructions: '', prepTime: '', calories: '', proteins: '', carbs: '', fats: '', tags: '', imageUrl: '' });
+    setIngredients([{ name: '', quantity: '', unit: '' }]);
     setShowModal(true);
   };
 
@@ -171,6 +202,38 @@ function Recipes() {
                 <label>URL de l'image</label>
                 <input type="text" value={form.imageUrl} onChange={e => setForm({...form, imageUrl: e.target.value})} />
               </div>
+
+              <div className="form-group">
+                <label>Ingrédients</label>
+                {ingredients.map((ing, index) => (
+                  <div key={index} className="ingredient-row">
+                    <input
+                      type="text"
+                      placeholder="Nom"
+                      value={ing.name}
+                      onChange={e => updateIngredient(index, 'name', e.target.value)}
+                      style={{flex: 2}}
+                    />
+                    <input
+                      type="number"
+                      placeholder="Qté"
+                      value={ing.quantity}
+                      onChange={e => updateIngredient(index, 'quantity', e.target.value)}
+                      style={{flex: 1}}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Unité"
+                      value={ing.unit}
+                      onChange={e => updateIngredient(index, 'unit', e.target.value)}
+                      style={{flex: 1}}
+                    />
+                    <button type="button" className="btn-small btn-delete" onClick={() => removeIngredient(index)}>×</button>
+                  </div>
+                ))}
+                <button type="button" className="btn-small btn-edit" style={{marginTop: '8px'}} onClick={addIngredient}>+ Ajouter un ingrédient</button>
+              </div>
+
               <div style={{display: 'flex', gap: '12px', marginTop: '20px'}}>
                 <button type="submit" className="btn-glow" style={{flex: 1}}>
                   {editingRecipe ? 'Modifier' : 'Créer'}

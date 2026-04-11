@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post('/', auth, async (req, res) => {
 try{
-const { name, instructions, prepTime, calories, proteins, carbs, fats, tags, imageUrl, source} = req.body;
+const { name, instructions, prepTime, calories, proteins, carbs, fats, tags, imageUrl, source, ingredients } = req.body;
 const recipe = await Recipe.create({
 	name,
 	instructions,
@@ -24,7 +24,27 @@ const recipe = await Recipe.create({
 	source,
 	UserId: req.user.id
 });
-	res.status(201).json(recipe);
+
+if (ingredients && ingredients.length > 0) {
+  for (const ing of ingredients) {
+    let ingredient = await Ingredient.findOne({ where: { name: ing.name } });
+    if (!ingredient) {
+      ingredient = await Ingredient.create({ name: ing.name, defaultUnit: ing.unit });
+    }
+    await RecipeIngredient.create({
+      quantity: ing.quantity || 1,
+      unit: ing.unit || '',
+      RecipeId: recipe.id,
+      IngredientId: ingredient.id
+    });
+  }
+}
+
+const fullRecipe = await Recipe.findByPk(recipe.id, {
+  include: [{ model: RecipeIngredient, include: [Ingredient] }]
+});
+
+	res.status(201).json(fullRecipe);
 } catch (error) {
 	res.status(500).json({ message: 'Erreur lors de la création', error: error.message});
 }
@@ -71,7 +91,7 @@ router.get('/search/:query', auth, async (req, res) => {
   try {
     const fetch = require('node-fetch');
     const response = await fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?query=${req.params.query}&addRecipeInformation=true&addRecipeNutrition=true&number=5&apiKey=${process.env.SPOONACULAR_API_KEY}`
+      `https://api.spoonacular.com/recipes/complexSearch?query=${req.params.query}&addRecipeInformation=true&addRecipeNutrition=true&fillIngredients=true&instructionsRequired=true&number=5&apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
     const data = await response.json();
     const adapter = new SpoonacularAdapter();

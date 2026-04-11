@@ -22,6 +22,7 @@ function Navbar() {
             <li><Link to="/recipes" className={location.pathname === '/recipes' ? 'active' : ''}>Recettes</Link></li>
             <li><Link to="/explore" className={location.pathname === '/explore' ? 'active' : ''}>Explorer</Link></li>
             <li><Link to="/planner" className={location.pathname === '/planner' ? 'active' : ''}>Planificateur</Link></li>
+            <li><Link to="/shopping" className={location.pathname === '/shopping' ? 'active' : ''}>Courses</Link></li>
           </>
         )}
       </ul>

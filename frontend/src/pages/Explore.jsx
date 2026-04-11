@@ -38,7 +38,8 @@ function Explore() {
         fats: recipe.fats,
         tags: recipe.tags ? JSON.parse(recipe.tags) : [],
         imageUrl: recipe.imageUrl,
-        source: 'API'
+        source: 'API',
+        ingredients: recipe.ingredients || []
       });
       setMessage(`"${recipe.name}" importée avec succès !`);
     } catch (err) {
